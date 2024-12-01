@@ -41,3 +41,12 @@ void eats(t_philo *philo)
     pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id]));
 }
 
+void    thinking(t_philo *philo)
+{
+    t_table         *table;
+
+    table = philo->table;
+    print_task(table, philo->philo_id, "is thinking");
+    smart_sleep(table->time_eat, table);
+}
+
