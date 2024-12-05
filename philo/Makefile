@@ -8,7 +8,7 @@ INC	= -I include/
 
 OBJ_DIR	= obj
 
-SRC	= $(addprefix src/, free.c init.c time.c main.c utils.c)
+SRC	= $(addprefix src/, free.c init.c time.c main.c utils.c routine.c)
 
 OBJ	= $(SRC:%.c=$(OBJ_DIR)/%.o)
 

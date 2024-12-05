@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include <philo.h>
 
 void eats(t_philo *philo)
 {
@@ -41,7 +41,7 @@ void eats(t_philo *philo)
     pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id]));
 }
 
-void    sleep(unsigned int id, t_table *table)
+void    sleeping(unsigned int id, t_table *table)
 {
     print_task(table, id, "is sleeping");
     smart_sleep(table->time_sleep, table);
@@ -62,7 +62,7 @@ void    *routine(void *void_routine)
         eats(philo);
         if (table->all_ate)
             break ;
-        sleep(philo->philo_id, table);
+        sleeping(philo->philo_id, table);
         i++;
     }
     return (NULL);
@@ -70,22 +70,22 @@ void    *routine(void *void_routine)
 
 int launch(t_table *table)
 {
-    int     i;
-    t_philo *philo;
+    unsigned int    i;
+    t_philo         *philo;
 
     i = 0;
     philo = table->philo;
     table->first_timestamp = get_time();
     while (i < table->nb_philo)
     {
-        if (pthread_create(&(philo[i].thread_id), NULL, routine, &(philo[i])))
+        if (pthread_create((philo[i].thread_id), NULL, routine, &(philo[i])))
             return (1);
         philo->last_meal = get_time();
         i++;
     }
     i = -1;
     while (++i < table->nb_philo)
-        pthread_join(philo[i].thread_id, NULL);
+        pthread_join(*(philo[i].thread_id), NULL);
     pthread_mutex_destroy(&(table->printing));
     return (0);
 }
