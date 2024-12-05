@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/25 23:03:32 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/04 22:33:39 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void				print_task(t_table *table, unsigned int id, char *str);
 int					init_all(char **av, t_table *table);
 int					init_value(char **av, t_table *table);
 int 				init_philosophers(t_table *table);
+int					launch(t_table *table);
 
 #endif
