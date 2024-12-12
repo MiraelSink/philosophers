@@ -58,11 +58,11 @@ void    *routine(void *void_routine)
     table = philo->table;
     while(!(table->died))
     {
-        print_task(table, philo->philo_id, "is thinking");
         eats(philo);
         if (table->all_ate)
             break ;
         sleeping(philo->philo_id, table);
+        print_task(table, philo->philo_id, "is thinking");
         i++;
     }
     return (NULL);
@@ -78,14 +78,15 @@ int launch(t_table *table)
     table->first_timestamp = get_time();
     while (i < table->nb_philo)
     {
-        if (pthread_create((philo[i].thread_id), NULL, routine, &(philo[i])))
+        printf("%d\n", i);
+        if (pthread_create(&(philo[i].thread_id), NULL, routine, &(philo[i])))
             return (1);
         philo->last_meal = get_time();
         i++;
     }
     i = -1;
     while (++i < table->nb_philo)
-        pthread_join(*(philo[i].thread_id), NULL);
+        pthread_join((philo[i].thread_id), NULL);
     pthread_mutex_destroy(&(table->printing));
     return (0);
 }

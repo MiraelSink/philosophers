@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 22:33:39 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:57:17 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_philo
 	unsigned int 	left_fork_id;
 	unsigned int	right_fork_id;
 	long long		last_meal;
-	pthread_t		*thread_id;
+	pthread_t		thread_id;
 	t_table			*table;
 }	t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:14:25 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/04 22:36:47 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:04:52 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init_mutex(t_table *table)
 	int i;
 
 	i = table->nb_philo;
-	while (i >= 0)
+	while (i > 0)
 	{
 		if (pthread_mutex_init(&(table->lock_fork[i - 1]), NULL))
 			return (1);
@@ -68,6 +68,7 @@ int	init_all(char **av, t_table *table)
 	init_value(av, table);
 	if (table->nb_philo < 2 || table->nb_philo > 200)
 		return (1);
+	table->lock_fork = malloc(sizeof(pthread_mutex_t) * table->nb_philo);
 	if (av[5])
 	{
 		table->nb_each_eat = ph_atoi(av[5]);
@@ -76,8 +77,8 @@ int	init_all(char **av, t_table *table)
 	}
 	else
 		table->nb_each_eat = -1;
+	init_philosophers(table);
 	if (init_mutex(table))
 		return (2);
-	init_philosophers(table);
 	return (0);
 }
