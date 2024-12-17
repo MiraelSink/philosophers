@@ -17,24 +17,24 @@ void eats(t_philo *philo)
     t_table *table;
 
     table = philo->table;
-    if (philo->philo_id % 2 == 0)
-    {
+    // if (philo->philo_id % 2 == 0)
+    // {
         if (!pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1])))
         {
             pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
             print_task(table, philo->philo_id, "has taken a fork");
             print_task(table, philo->philo_id, "has taken a fork");
         }
-    }
-    else
-    {
-        if (!pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1])))
-        {
-            pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
-            print_task(table, philo->philo_id, "has taken a fork");
-            print_task(table, philo->philo_id, "has taken a fork");
-        }
-    }
+    // }
+    // else
+    // {
+    //     if (!pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1])))
+    //     {
+    //         pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
+    //         print_task(table, philo->philo_id, "has taken a fork");
+    //         print_task(table, philo->philo_id, "has taken a fork");
+    //     }
+    // }
     pthread_mutex_lock(&(table->check_meal));
     print_task(table, philo->philo_id, "is eating");
     philo->last_meal = get_time();
@@ -60,7 +60,7 @@ void    *routine(void *void_routine)
     i = 0;
     philo = (t_philo *)void_routine;
     table = philo->table;
-    if (philo->philo_id % 2 != 0)
+    if (philo->philo_id % 2 == 0)
         usleep(1000);
     while(!(table->died))
     {
@@ -76,9 +76,37 @@ void    *routine(void *void_routine)
     return (NULL);
 }
 
+void    monitor(t_table *t, t_philo *p)
+{
+    int i;
+
+    while (!(t->all_ate))
+    {
+        i = -1;
+        while(++i < t->nb_philo && !(t->died))
+        {
+            pthread_mutex_lock(&(t->check_meal));
+            // if (time_diff(p[i].last_meal, get_time()) > (t->time_die + 50))
+            // {
+            //     print_task(t, i, "died");
+            //     t->died = 1;
+            // }
+            pthread_mutex_unlock(&(t->check_meal));
+            usleep(10);
+        }
+        if (t->died)
+            break ;
+        i = 0;
+        while ((t->nb_each_eat != -1) && (i < t->nb_philo) && (p[i].x_ate >= t->nb_each_eat))
+            i++;
+        if (i == t->nb_philo)
+            t->all_ate = 1;
+    }
+}
+
 int launch(t_table *table)
 {
-    unsigned int    i;
+    int    i;
     t_philo         *philo;
 
     i = 0;
@@ -93,6 +121,7 @@ int launch(t_table *table)
         pthread_mutex_unlock(&(table->check_meal));
         i++;
     }
+    monitor(table, philo);
     i = -1;
     while (++i < table->nb_philo)
         pthread_join((philo[i].thread_id), NULL);

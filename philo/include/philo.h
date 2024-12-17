@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/12 14:35:40 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 23:25:53 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_table t_table;
 typedef struct	s_philo
 {
 	unsigned int	philo_id;
-	unsigned int	x_ate;
+	int				x_ate;
 	unsigned int 	left_fork_id;
 	unsigned int	right_fork_id;
 	long long		last_meal;
@@ -34,12 +34,12 @@ typedef struct	s_philo
 
 struct s_table
 {
-	unsigned int		nb_philo;
+	int					nb_philo;
 	unsigned int		time_die;
 	unsigned int		time_eat;
 	unsigned int		time_sleep;
-	unsigned int		nb_each_eat;
-	unsigned int		died;
+	int					nb_each_eat;
+	int					died;
 	unsigned int		all_ate;
 	unsigned int 		*fork;
 	unsigned long int 	first_timestamp;
