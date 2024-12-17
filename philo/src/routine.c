@@ -19,17 +19,21 @@ void eats(t_philo *philo)
     table = philo->table;
     if (philo->philo_id % 2 == 0)
     {
-        pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
-        print_task(table, philo->philo_id, "has taken a fork");
-        pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
-        print_task(table, philo->philo_id, "has taken a fork");
+        if (!pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1])))
+        {
+            pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
+            print_task(table, philo->philo_id, "has taken a fork");
+            print_task(table, philo->philo_id, "has taken a fork");
+        }
     }
     else
     {
-        pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
-        print_task(table, philo->philo_id, "has taken a fork");
-        pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
-        print_task(table, philo->philo_id, "has taken a fork");
+        if (!pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1])))
+        {
+            pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
+            print_task(table, philo->philo_id, "has taken a fork");
+            print_task(table, philo->philo_id, "has taken a fork");
+        }
     }
     pthread_mutex_lock(&(table->check_meal));
     print_task(table, philo->philo_id, "is eating");
@@ -56,8 +60,8 @@ void    *routine(void *void_routine)
     i = 0;
     philo = (t_philo *)void_routine;
     table = philo->table;
-    if (philo->philo_id % 2 == 0)
-        usleep(500);
+    if (philo->philo_id % 2 != 0)
+        usleep(1000);
     while(!(table->died))
     {
         eats(philo);
@@ -66,7 +70,7 @@ void    *routine(void *void_routine)
         sleeping(philo->philo_id, table);
         print_task(table, philo->philo_id, "is thinking");
         // usleep(500);
-        smart_sleep(((table->time_eat) - (table->time_sleep)) / 2, table);
+        smart_sleep(((table->time_die) - (table->time_sleep + table->time_eat + 10)), table);
         i++;
     }
     return (NULL);
