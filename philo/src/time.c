@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:50:09 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/07 22:51:40 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/17 23:33:57 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	smart_sleep(unsigned long int time, t_table *table)
 	{
 		if (time_diff(i, get_time()) > time)
 			break ;
-		usleep(10);
+		usleep(5);
 	}
 }
