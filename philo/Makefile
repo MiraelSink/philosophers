@@ -16,7 +16,7 @@ all		: $(NAME)
 
 $(NAME)		: $(OBJ)
 	@$(CC) $(INC) $(CFLAGS) $(OBJ) -o $@
-	@echo -e "\033[0;92mExecutable '"'philo'"' was created successfully\033[0m"
+	@echo "\033[0;92mExecutable '"'philo'"' was created successfully\033[0m"
 
 $(OBJ_DIR)/%.o	: %.c
 	@mkdir -p '$(@D)'
@@ -25,12 +25,12 @@ $(OBJ_DIR)/%.o	: %.c
 clean		:
 	@rm -rf $(OBJ_DIR)
 	@clear
-	@echo -e "\033[0;93mAll objects was suppressed\033[0m"
+	@echo "\033[0;93mAll objects was suppressed\033[0m"
 
 fclean		: clean
-	@rm $(NAME)
+	@rm -rf $(NAME)
 	@clear
-	@echo -e "\033[0;91mphilo was suppressed\033[0m"
+	@echo "\033[0;91mphilo was suppressed\033[0m"
 
 re		: fclean all
 

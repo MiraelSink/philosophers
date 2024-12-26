@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 23:25:53 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:48:23 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_philo
 {
 	unsigned int	philo_id;
 	int				x_ate;
+	int				is_full;
 	unsigned int 	left_fork_id;
 	unsigned int	right_fork_id;
 	long long		last_meal;
@@ -41,7 +42,7 @@ struct s_table
 	int					nb_each_eat;
 	int					died;
 	unsigned int		all_ate;
-	unsigned int 		*fork;
+	unsigned int 		*state_forks;
 	unsigned long int 	first_timestamp;
 	pthread_mutex_t 	*lock_fork;
 	pthread_mutex_t 	check_meal;
@@ -55,9 +56,10 @@ unsigned long int	time_diff(unsigned long int past, unsigned long int present);
 void				free_value(t_table *table);
 void				smart_sleep(unsigned long int time, t_table *table);
 void				print_task(t_table *table, unsigned int id, char *str);
-int					init_all(char **av, t_table *table);
-int					init_value(char **av, t_table *table);
+int					init_all(int ac, char **av, t_table *table);
+int					init_value(int ac, char **av, t_table *table);
 int 				init_philosophers(t_table *table);
+int 				check_die(t_table *table);
 int					launch(t_table *table);
 
 #endif

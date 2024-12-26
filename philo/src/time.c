@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:50:09 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/17 23:33:57 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:48:47 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	smart_sleep(unsigned long int time, t_table *table)
 	unsigned long int i;
 
 	i = get_time();
-	while(!(table->died))
+	while(check_die(table) != 1)
 	{
 		if (time_diff(i, get_time()) > time)
 			break ;

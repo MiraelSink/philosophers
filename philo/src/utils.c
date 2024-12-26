@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:04:13 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/09 15:40:38 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:48:52 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ unsigned int	ph_atoi(char *str)
 void	print_task(t_table *table, unsigned int id, char *str)
 {
 	pthread_mutex_lock(&(table->printing));
-	if (!(table->died))
+	if (check_die(table) == 0)
 	{
 		printf("%lu ", get_time() - table->first_timestamp);
 		printf("%u ", id);
