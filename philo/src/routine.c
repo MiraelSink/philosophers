@@ -6,17 +6,17 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/11/12 22:09:37 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/27 06:30:02 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void eats(t_philo *philo)
+void	eats(t_philo *philo)
 {
-    t_table *table;
+	t_table	*table;
 
-    table = philo->table;
+	table = philo->table;
 	if (philo->philo_id % 2 == 0)
 	{
 		pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
@@ -35,52 +35,52 @@ void eats(t_philo *philo)
 		table->state_forks[philo->left_fork_id - 1] = 1;
 		print_task(table, philo->philo_id, "has taken a fork");
 	}
-    print_task(table, philo->philo_id, "is eating");
+	print_task(table, philo->philo_id, "is eating");
 	pthread_mutex_lock(&(table->check_meal));
-    philo->last_meal = get_time();
-    pthread_mutex_unlock(&(table->check_meal));
-    smart_sleep(table->time_eat, table);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&(table->check_meal));
+	smart_sleep(table->time_eat, table);
 	pthread_mutex_lock(&(table->check_meal));
-    philo->x_ate += 1;
+	philo->x_ate += 1;
 	pthread_mutex_unlock(&(table->check_meal));
 	table->state_forks[philo->left_fork_id - 1] = 0;
-    pthread_mutex_unlock(&(table->lock_fork[philo->left_fork_id - 1]));
+	pthread_mutex_unlock(&(table->lock_fork[philo->left_fork_id - 1]));
 	table->state_forks[philo->right_fork_id - 1] = 0;
-    pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id - 1]));
+	pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id - 1]));
 }
 
-void    sleeping(unsigned int id, t_table *table)
+void	sleeping(unsigned int id, t_table *table)
 {
-    print_task(table, id, "is sleeping");
-    smart_sleep(table->time_sleep, table);
+	print_task(table, id, "is sleeping");
+	smart_sleep(table->time_sleep, table);
 }
 
-void    *routine(void *void_routine)
+void	*routine(void *void_routine)
 {
-    unsigned int    i;
-    t_philo         *philo;
-    t_table         *table;
+	unsigned int	i;
+	t_philo			*philo;
+	t_table			*table;
 
-    i = 0;
-    philo = (t_philo *)void_routine;
-    table = philo->table;
+	i = 0;
+	philo = (t_philo *)void_routine;
+	table = philo->table;
 	if (table->nb_philo == 1)
 	{
-        print_task(table, philo->philo_id, "has taken a fork");
-        return (NULL);
-    }
-    if (philo->philo_id % 2 == 0)
-        usleep(500);
-    while(check_die(table) != 1)
-    {
-        eats(philo);
-        sleeping(philo->philo_id, table);
-        print_task(table, philo->philo_id, "is thinking");
+		print_task(table, philo->philo_id, "has taken a fork");
+		return (NULL);
+	}
+	if (philo->philo_id % 2 == 0)
+		usleep(500);
+	while (check_die(table) != 1)
+	{
+		eats(philo);
+		sleeping(philo->philo_id, table);
+		print_task(table, philo->philo_id, "is thinking");
 		if (table->nb_philo % 2)
-        	smart_sleep((table->time_eat * 2 - table->time_sleep), table);
-        i++;
-    }
-    return (NULL);
+			smart_sleep((table->time_eat * 2 - table->time_sleep), table);
+		i++;
+	}
+	return (NULL);
 }
 
 // void    monitor(t_table *t)
@@ -93,7 +93,8 @@ void    *routine(void *void_routine)
 //         while(++i < t->nb_philo && !(t->died))
 //         {
 //             pthread_mutex_lock(&(t->check_meal));
-//             // if (time_diff(p[i].last_meal, get_time()) > (t->time_die + 50))
+//             // if (time_diff(p[i].last_meal, get_time()) > (t->time_die
+		// + 50))
 //             // {
 //             //     print_task(t, i, "died");
 //             //     t->died = 1;
@@ -104,54 +105,56 @@ void    *routine(void *void_routine)
 //         if (t->died)
 //             break ;
 //         i = 0;
-//         while ((t->nb_each_eat != -1) && (i < t->nb_philo) && (p[i].x_ate >= t->nb_each_eat))
+//         while ((t->nb_each_eat != -1) && (i < t->nb_philo)
+	// && (p[i].x_ate >= t->nb_each_eat))
 //             i++;
 //         if (i == t->nb_philo)
 //             t->all_ate = 1;
 //     }
 // }
 
-int check_die(t_table *table)
+int	check_die(t_table *table)
 {
-    int die;
+	int	die;
 
-    pthread_mutex_lock(&(table->check_meal));
-    die = table->died;
-    pthread_mutex_unlock(&(table->check_meal));
-    return (die);
+	pthread_mutex_lock(&(table->check_meal));
+	die = table->died;
+	pthread_mutex_unlock(&(table->check_meal));
+	return (die);
 }
 
-void    *monitr(void *arg)
+void	*monitr(void *arg)
 {
-    t_table *table;
-    unsigned long int   last_meal;
-    int                 nb_eat;
-    int     i;
+	t_table				*table;
+	unsigned long int	last_meal;
+	int					nb_eat;
+	int					i;
 
-    table = (t_table *)arg;
-    i = 0;
-    while (check_die(table) != 1)
-    {
-        usleep(10);
-        i = 0;
-        while (i < table->nb_philo)
-        {
-            pthread_mutex_lock(&(table->check_meal));
-            last_meal = table->philo[i].last_meal;
-            pthread_mutex_unlock(&(table->check_meal));
-            if (time_diff(last_meal, get_time()) >= table->time_die)
-            {
-                pthread_mutex_lock(&(table->printing));
-                printf("%lu %d died\n", time_diff(table->first_timestamp, get_time()), table->philo[i].philo_id);
-                pthread_mutex_unlock(&(table->printing));
-                pthread_mutex_lock(&(table->check_meal));
-                table->died = 1;
-                pthread_mutex_unlock(&(table->check_meal));
-                break;
-            }
+	table = (t_table *)arg;
+	i = 0;
+	while (check_die(table) != 1)
+	{
+		usleep(10);
+		i = 0;
+		while (i < table->nb_philo)
+		{
 			pthread_mutex_lock(&(table->check_meal));
-            nb_eat = table->philo[i].x_ate;
-            pthread_mutex_unlock(&(table->check_meal));
+			last_meal = table->philo[i].last_meal;
+			pthread_mutex_unlock(&(table->check_meal));
+			if (time_diff(last_meal, get_time()) >= table->time_die)
+			{
+				pthread_mutex_lock(&(table->printing));
+				printf("%lu %d died\n", time_diff(table->first_timestamp,
+						get_time()), table->philo[i].philo_id);
+				pthread_mutex_unlock(&(table->printing));
+				pthread_mutex_lock(&(table->check_meal));
+				table->died = 1;
+				pthread_mutex_unlock(&(table->check_meal));
+				break ;
+			}
+			pthread_mutex_lock(&(table->check_meal));
+			nb_eat = table->philo[i].x_ate;
+			pthread_mutex_unlock(&(table->check_meal));
 			if (table->nb_each_eat != -1 && nb_eat > table->nb_each_eat)
 			{
 				if (table->philo[i].is_full == 0)
@@ -166,40 +169,41 @@ void    *monitr(void *arg)
 					break ;
 				}
 			}
-            i++;
-        }
-    }
-    return (NULL);
+			i++;
+		}
+	}
+	return (NULL);
 }
 
-int launch(t_table *table)
+int	launch(t_table *table)
 {
-    int		i;
-    pthread_t   monitor;
+	int			i;
+	pthread_t	monitor;
 
-    i = 0;
-    table->first_timestamp = get_time();
-    // monitor(table, philo);
-    pthread_create(&monitor, NULL, monitr, table);
-    while (i < table->nb_philo)
-    {
-        pthread_mutex_lock(&(table->check_meal));
-        table->philo[i].last_meal = table->first_timestamp;
-        pthread_mutex_unlock(&(table->check_meal));
-        i++;
-    }
-    i = 0;
-    while (i < table->nb_philo)
-    {
-        pthread_create(&table->philo[i].thread_id, NULL, routine, &table->philo[i]);
-        i++;
-    }
-    i = 0;
-    pthread_join(monitor, NULL);
-    while (i < table->nb_philo)
+	i = 0;
+	table->first_timestamp = get_time();
+	// monitor(table, philo);
+	pthread_create(&monitor, NULL, monitr, table);
+	while (i < table->nb_philo)
 	{
-    	pthread_join((table->philo[i].thread_id), NULL);
+		pthread_mutex_lock(&(table->check_meal));
+		table->philo[i].last_meal = table->first_timestamp;
+		pthread_mutex_unlock(&(table->check_meal));
 		i++;
 	}
-    return (1);
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		pthread_create(&table->philo[i].thread_id, NULL, routine,
+			&table->philo[i]);
+		i++;
+	}
+	i = 0;
+	pthread_join(monitor, NULL);
+	while (i < table->nb_philo)
+	{
+		pthread_join((table->philo[i].thread_id), NULL);
+		i++;
+	}
+	return (1);
 }

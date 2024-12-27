@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:37:07 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 12:48:40 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/27 06:28:31 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char *av[])
 {
-	t_table table;
+	t_table	table;
 
 	if (!init_all(ac, av, &table))
 		return (1);
@@ -50,10 +50,13 @@ int	main(int ac, char *av[])
 // 		printf("time to eat : %u\n", table.time_eat);
 // 		printf("time to sleep : %u\n", table.time_sleep);
 // 		if (ac == 6)
-// 			printf("number of time each one should eat : %u\n", table.nb_each_eat);
-// 		printf("time start from : %lu\n", time_diff(table.first_timestamp, table.first_timestamp));
+// 			printf("number of time each one should eat : %u\n",
+				// table.nb_each_eat);
+// 		printf("time start from : %lu\n", time_diff(table.first_timestamp,
+				// table.first_timestamp));
 // 		smart_sleep(table.time_die, &table);
-// 		printf("time end at : %lu\n", time_diff(table.first_timestamp, get_time()));
+// 		printf("time end at : %lu\n", time_diff(table.first_timestamp,
+				// get_time()));
 // 		free_value(&table);
 // 	}
 // 	return (0);
