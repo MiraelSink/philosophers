@@ -18,7 +18,7 @@ unsigned long int	get_time(void)
 	unsigned long int	gt;
 
 	if (gettimeofday(&tv, NULL))
-		return(0);
+		return (0);
 	gt = (tv.tv_sec * (1000)) + (tv.tv_usec / 1000);
 	return (gt);
 }
@@ -33,7 +33,7 @@ void	smart_sleep(unsigned long int time, t_table *table)
 	unsigned long int i;
 
 	i = get_time();
-	while(check_die(table) != 1)
+	while (check_die(table) != 1)
 	{
 		if (time_diff(i, get_time()) > time)
 			break ;

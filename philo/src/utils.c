@@ -21,7 +21,7 @@ unsigned int	ph_atoi(char *str)
 	nb = 0;
 	while (str[i])
 	{
-		if (str[i] < '0' && str[i] >'9')
+		if (str[i] < '0' && str[i] > '9')
 			return (0);
 		nb = nb * 10 + (str[i] - 48);
 		i++;

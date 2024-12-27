@@ -14,7 +14,7 @@
 
 int	init_mutex(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < table->nb_philo)
@@ -64,10 +64,10 @@ int	init_value(int ac, char **av, t_table *table)
 
 int	init_philosophers(t_table *table)
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = table->nb_philo;
-	while ( i > 0)
+	while (i > 0)
 	{
 		table->philo[i - 1].is_full = 0;
 		table->philo[i - 1].philo_id = i;
@@ -90,8 +90,10 @@ int	init_all(int ac, char **av, t_table *table)
 	if (ac != 5 && ac != 6)
 	{
 		write(2, "Error: wrong number of arguments\n", 33);
-		write(2, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep"
-			"[number_of_time_each_philosopher_must_eat]\n", 119);
+		write(2,
+				"Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep"
+				"[number_of_time_each_philosopher_must_eat]\n",
+				119);
 		return (0);
 	}
 	if (init_value(ac, av, table) == 0)
