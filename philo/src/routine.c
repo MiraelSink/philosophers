@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 18:42:00 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 19:59:07 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,29 +130,24 @@ int	launch(t_table *table)
 	int			i;
 	pthread_t	monitor;
 
-	i = 0;
+	i = -1;
 	table->first_timestamp = get_time();
 	pthread_create(&monitor, NULL, monitr, table);
-	while (i < table->nb_philo)
+	while (++i < table->nb_philo)
 	{
 		pthread_mutex_lock(&(table->check_meal));
 		table->philo[i].last_meal = table->first_timestamp;
 		pthread_mutex_unlock(&(table->check_meal));
-		i++;
 	}
-	i = 0;
-	while (i < table->nb_philo)
+	i = -1;
+	while (++i < table->nb_philo)
 	{
 		pthread_create(&table->philo[i].thread_id, NULL, routine,
 			&table->philo[i]);
-		i++;
 	}
-	i = 0;
+	i = -1;
 	pthread_join(monitor, NULL);
-	while (i < table->nb_philo)
-	{
+	while (++i < table->nb_philo)
 		pthread_join((table->philo[i].thread_id), NULL);
-		i++;
-	}
 	return (1);
 }
