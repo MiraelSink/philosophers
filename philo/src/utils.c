@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:04:13 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 18:27:05 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 19:35:20 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,28 @@ int	ph_atoi(char *str)
 {
 	int	nb;
 	int	i;
-	int	sign;
+	int sign;
 
-	i = 0;
 	sign = 1;
-	while (str[i] == 32 || str[i] == '\t')
+	i = 0;
+	nb = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32 || str[i] == '\t')
 		i++;
-	if (str[i] == '-')
-		return (-1);
-	if (str[i] == '+')
-		i++;
-	while (str[i])
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (str[i] >= '0' && str[i] <= '9')
-			nb = nb * 10 + (str[i] - 48);
-		else
-			return (-1);
+		if (str[i] == '-')
+			sign = -1;
 		i++;
 	}
+	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
+	{
+		nb = nb * 10 + (str[i] - 48);
+		i++;
+	}
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32 || str[i] == '\t')
+		i++;
+	if (str[i])
+		return (0);
 	return (nb * sign);
 }
 
