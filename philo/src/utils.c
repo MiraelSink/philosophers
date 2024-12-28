@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:04:13 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 19:35:20 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:20:29 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ph_atoi(char *str)
 {
 	int	nb;
 	int	i;
-	int sign;
+	int	sign;
 
 	sign = 1;
 	i = 0;
