@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:14:25 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 12:48:37 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:01:54 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	init_value(int ac, char **av, t_table *table)
 	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->nb_philo);
 	if (!table->philo)
 		return (0);
-	table->time_die = ph_atoi(av[2]);
-	table->time_eat = ph_atoi(av[3]);
-	table->time_sleep = ph_atoi(av[4]);
+	take_time_value(table, av);
 	if (table->time_die <= 0 || table->time_eat <= 0 || table->time_sleep <= 0)
 	{
 		write(2, "Error: wrong time\n", 18);
@@ -90,10 +88,9 @@ int	init_all(int ac, char **av, t_table *table)
 	if (ac != 5 && ac != 6)
 	{
 		write(2, "Error: wrong number of arguments\n", 33);
-		write(2,
-				"Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep"
-				"[number_of_time_each_philosopher_must_eat]\n",
-				119);
+		write(2, "Usage: ./philo number_of_philosophers time_to_die", 49);
+		write(2, " time_to_eat time_to_sleep", 26);
+		write(2, " [number_of_time_each_philosopher_must_eat]\n", 44);
 		return (0);
 	}
 	if (init_value(ac, av, table) == 0)

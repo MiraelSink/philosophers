@@ -6,16 +6,16 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:50:09 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/26 12:48:47 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:23:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-unsigned long int	get_time(void)
+long int	get_time(void)
 {
-	struct timeval		tv;
-	unsigned long int	gt;
+	struct timeval	tv;
+	long int		gt;
 
 	if (gettimeofday(&tv, NULL))
 		return (0);
@@ -23,14 +23,14 @@ unsigned long int	get_time(void)
 	return (gt);
 }
 
-unsigned long int	time_diff(unsigned long int past, unsigned long int present)
+long int	time_diff(long int past, long int present)
 {
 	return (present - past);
 }
 
-void	smart_sleep(unsigned long int time, t_table *table)
+void	smart_sleep(long int time, t_table *table)
 {
-	unsigned long int i;
+	unsigned long int	i;
 
 	i = get_time();
 	while (check_die(table) != 1)
