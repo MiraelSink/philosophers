@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 21:40:59 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:10:09 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,41 +85,18 @@ void	*monitr(void *arg)
 	while (check_die(table) != 1)
 	{
 		usleep(10);
-		i = 0;
-		while (i < table->nb_philo)
+		i = -1;
+		while (++i < table->nb_philo)
 		{
-			pthread_mutex_lock(&(table->check_meal));
-			last_meal = table->philo[i].last_meal;
-			pthread_mutex_unlock(&(table->check_meal));
+			check_last_meal(table, &last_meal, i);
 			if (time_diff(last_meal, get_time()) >= table->time_die)
 			{
-				pthread_mutex_lock(&(table->printing));
-				printf("%lu %d died\n", time_diff(table->first_timestamp,
-						get_time()), table->philo[i].philo_id);
-				pthread_mutex_unlock(&(table->printing));
-				pthread_mutex_lock(&(table->check_meal));
-				table->died = 1;
-				pthread_mutex_unlock(&(table->check_meal));
+				watch_out(table, i);
 				break ;
 			}
-			pthread_mutex_lock(&(table->check_meal));
-			nb_eat = table->philo[i].x_ate;
-			pthread_mutex_unlock(&(table->check_meal));
-			if (table->nb_each_eat != -1 && nb_eat > table->nb_each_eat)
-			{
-				if (table->philo[i].is_full == 0)
-					table->philo[i].is_full = 1;
-				if (table->philo[i].is_full == 1)
-					table->all_ate += 1;
-				if ((int)table->all_ate == table->nb_philo)
-				{
-					pthread_mutex_lock(&(table->check_meal));
-					table->died = 1;
-					pthread_mutex_unlock(&(table->check_meal));
-					break ;
-				}
-			}
-			i++;
+			check_nb_eat(table, i, &nb_eat);
+			if (addition_full(table, i, nb_eat))
+				break ;
 		}
 	}
 	return (NULL);
