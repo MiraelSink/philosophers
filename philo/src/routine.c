@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 21:07:54 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 21:40:59 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ int	launch(t_table *table)
 		pthread_mutex_lock(&(table->check_meal));
 		table->philo[i].last_meal = table->first_timestamp;
 		pthread_mutex_unlock(&(table->check_meal));
-		pthread_create(&monitor, NULL, monitr, table);
 	}
+	pthread_create(&monitor, NULL, monitr, table);
 	i = -1;
 	while (++i < table->nb_philo)
 	{
