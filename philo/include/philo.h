@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 18:38:10 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:24:38 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,21 @@ int					ph_atoi(char *str);
 long int			get_time(void);
 long int			time_diff(long int past, long int present);
 void				free_value(t_table *table);
+void				watch_out(t_table *table, int i);
 void				sleeping(unsigned int id, t_table *table);
 void				eats_odd(t_table *table, t_philo *philo);
 void				eats_even(t_table *table, t_philo *philo);
 void				take_time_value(t_table *table, char **av);
 void				smart_sleep(long int time, t_table *table);
+void				check_nb_eat(t_table *table, int i, int *nb_eat);
 void				print_task(t_table *table, unsigned int id, char *str);
+void				check_last_meal(t_table *t, unsigned long int *lm, int i);
 int					init_all(int ac, char **av, t_table *table);
 int					init_value(int ac, char **av, t_table *table);
 int					init_philosophers(t_table *table);
 int					check_die(t_table *table);
 int					launch(t_table *table);
 int					w_philo(int code);
+int					addition_full(t_table *table, int i, int nb_eat);
 
 #endif
