@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 16:30:01 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:42:00 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,9 @@ void	eats(t_philo *philo)
 
 	table = philo->table;
 	if (philo->philo_id % 2 == 0)
-	{
-		pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
-		table->state_forks[philo->left_fork_id - 1] = 1;
-		print_task(table, philo->philo_id, "has taken a fork");
-		pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
-		table->state_forks[philo->right_fork_id - 1] = 1;
-		print_task(table, philo->philo_id, "has taken a fork");
-	}
+		eats_even(table, philo);
 	else
-	{
-		pthread_mutex_lock(&(table->lock_fork[philo->right_fork_id - 1]));
-		table->state_forks[philo->right_fork_id - 1] = 1;
-		print_task(table, philo->philo_id, "has taken a fork");
-		pthread_mutex_lock(&(table->lock_fork[philo->left_fork_id - 1]));
-		table->state_forks[philo->left_fork_id - 1] = 1;
-		print_task(table, philo->philo_id, "has taken a fork");
-	}
+		eats_odd(table, philo);
 	print_task(table, philo->philo_id, "is eating");
 	pthread_mutex_lock(&(table->check_meal));
 	philo->last_meal = get_time();
@@ -47,12 +33,6 @@ void	eats(t_philo *philo)
 	pthread_mutex_unlock(&(table->lock_fork[philo->left_fork_id - 1]));
 	table->state_forks[philo->right_fork_id - 1] = 0;
 	pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id - 1]));
-}
-
-void	sleeping(unsigned int id, t_table *table)
-{
-	print_task(table, id, "is sleeping");
-	smart_sleep(table->time_sleep, table);
 }
 
 void	*routine(void *void_routine)

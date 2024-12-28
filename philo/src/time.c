@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:50:09 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 16:23:33 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:08:09 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,10 @@ void	smart_sleep(long int time, t_table *table)
 			break ;
 		usleep(5);
 	}
+}
+
+void	sleeping(unsigned int id, t_table *table)
+{
+	print_task(table, id, "is sleeping");
+	smart_sleep(table->time_sleep, table);
 }

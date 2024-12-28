@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 17:15:14 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 16:47:04 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:38:10 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int					ph_atoi(char *str);
 long int			get_time(void);
 long int			time_diff(long int past, long int present);
 void				free_value(t_table *table);
+void				sleeping(unsigned int id, t_table *table);
+void				eats_odd(t_table *table, t_philo *philo);
+void				eats_even(t_table *table, t_philo *philo);
 void				take_time_value(t_table *table, char **av);
 void				smart_sleep(long int time, t_table *table);
 void				print_task(t_table *table, unsigned int id, char *str);
@@ -62,5 +65,6 @@ int					init_value(int ac, char **av, t_table *table);
 int					init_philosophers(t_table *table);
 int					check_die(t_table *table);
 int					launch(t_table *table);
+int					w_philo(int code);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:14:25 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 17:01:54 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:58:33 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,19 @@ int	init_value(int ac, char **av, t_table *table)
 {
 	table->nb_philo = ph_atoi(av[1]);
 	if (table->nb_philo <= 0)
-	{
-		write(2, "Error: wrong number of philosophers\n", 36);
-		return (0);
-	}
+		return (w_philo(1));
 	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->nb_philo);
 	if (!table->philo)
 		return (0);
 	take_time_value(table, av);
 	if (table->time_die <= 0 || table->time_eat <= 0 || table->time_sleep <= 0)
-	{
-		write(2, "Error: wrong time\n", 18);
-		return (0);
-	}
+		return (w_philo(2));
 	table->nb_each_eat = -1;
 	if (ac == 6)
 	{
 		table->nb_each_eat = ph_atoi(av[5]);
 		if (table->nb_each_eat <= 0)
-		{
-			write(2, "Error: wrong number of each to eat\n", 36);
-			return (0);
-		}
+			return (w_philo(3));
 	}
 	table->all_ate = 0;
 	table->died = 0;
