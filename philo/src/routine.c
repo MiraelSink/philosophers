@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/27 06:30:02 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:30:01 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,36 +83,6 @@ void	*routine(void *void_routine)
 	return (NULL);
 }
 
-// void    monitor(t_table *t)
-// {
-//     int i;
-
-//     while (!(t->all_ate))
-//     {
-//         i = -1;
-//         while(++i < t->nb_philo && !(t->died))
-//         {
-//             pthread_mutex_lock(&(t->check_meal));
-//             // if (time_diff(p[i].last_meal, get_time()) > (t->time_die
-		// + 50))
-//             // {
-//             //     print_task(t, i, "died");
-//             //     t->died = 1;
-//             // }
-//             pthread_mutex_unlock(&(t->check_meal));
-//             usleep(10);
-//         }
-//         if (t->died)
-//             break ;
-//         i = 0;
-//         while ((t->nb_each_eat != -1) && (i < t->nb_philo)
-	// && (p[i].x_ate >= t->nb_each_eat))
-//             i++;
-//         if (i == t->nb_philo)
-//             t->all_ate = 1;
-//     }
-// }
-
 int	check_die(t_table *table)
 {
 	int	die;
@@ -182,7 +152,6 @@ int	launch(t_table *table)
 
 	i = 0;
 	table->first_timestamp = get_time();
-	// monitor(table, philo);
 	pthread_create(&monitor, NULL, monitr, table);
 	while (i < table->nb_philo)
 	{
