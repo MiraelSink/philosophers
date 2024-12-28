@@ -6,7 +6,7 @@
 /*   By: maandria <maandria@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:37 by maandria          #+#    #+#             */
-/*   Updated: 2024/12/28 23:10:09 by maandria         ###   ########.fr       */
+/*   Updated: 2024/12/29 00:46:27 by maandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@ void	eats(t_philo *philo)
 		eats_even(table, philo);
 	else
 		eats_odd(table, philo);
-	print_task(table, philo->philo_id, "is eating");
-	pthread_mutex_lock(&(table->check_meal));
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(&(table->check_meal));
-	smart_sleep(table->time_eat, table);
-	pthread_mutex_lock(&(table->check_meal));
-	philo->x_ate += 1;
-	pthread_mutex_unlock(&(table->check_meal));
-	table->state_forks[philo->left_fork_id - 1] = 0;
-	pthread_mutex_unlock(&(table->lock_fork[philo->left_fork_id - 1]));
-	table->state_forks[philo->right_fork_id - 1] = 0;
-	pthread_mutex_unlock(&(table->lock_fork[philo->right_fork_id - 1]));
 }
 
 void	*routine(void *void_routine)
@@ -84,7 +72,7 @@ void	*monitr(void *arg)
 	i = 0;
 	while (check_die(table) != 1)
 	{
-		usleep(10);
+		usleep(5);
 		i = -1;
 		while (++i < table->nb_philo)
 		{
